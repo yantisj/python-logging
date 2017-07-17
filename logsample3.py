@@ -3,7 +3,7 @@ import logging
 import argparse
 import configparser
 import requests
-import module
+import sample_module
 
 DEBUG = 0
 CONFIG_FILE = 'logsample.ini'
@@ -58,10 +58,9 @@ r = requests.get(url)
 
 if r.status_code == 200:
     logger.info('Successfully retrieved URL: %s', url)
-print(str(r.status_code))
 logger.debug('First 50 chars returned from URL: %s', r.text[:50])
 
-module.say_something('Testing')
+sample_module.log_message('Testing')
 
 logger.debug('Debug Message')
 logger.info('Info Message')
