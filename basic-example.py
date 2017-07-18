@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 import logging
 import requests
+import sample_module
 
+# Setup basic logging, provide a format for output and set the level to debug
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', \
                     level=logging.DEBUG)
 
+# Test logging at different levels
 logging.debug('Debug Message')
 logging.info('Info Message')
 logging.warning('Warning Message')
 
-# Silence urllib3 debug
-logging.getLogger('urllib3').setLevel(logging.WARNING)
+# Test Module Logging
+sample_module.log_message('Module Logging Test')
 
-url = 'https://www.google.com/'
+# Silence sample_module debug messages
+logging.getLogger('sample_module').setLevel(logging.INFO)
+sample_module.log_message('Module Logging Test without debug')
 
+logging.info('Testing divide by 0 exception')
 try:
-    r = requests.get(url)
-
-    if r.status_code == 200:
-        logging.info('Successfully retrieved URL: %s', url)
-    else:
-        logging.critical('Failed to retrieve url: %s Status: %s', url, str(r.status_code))
+    1/0
 except Exception as e:
     logging.error(e)
+
+    ## Uncomment for stack trace logging
     #logging.error(e, exc_info=True)
